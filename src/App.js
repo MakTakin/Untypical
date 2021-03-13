@@ -1,10 +1,13 @@
-
-
+import Users from './components/users/users';
+import Main from './components/main/main'
+import Container from '@material-ui/core/Container';
+import Modal from './components/modal/modal';
 function App() {
   return (
-    <div>
-
-    </div>
+    <Container maxWidth="lg">
+      <Main/>
+      <Modal/>
+    </Container>
   );
 }
 
