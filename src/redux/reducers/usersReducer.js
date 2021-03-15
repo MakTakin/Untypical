@@ -3,6 +3,7 @@ import {
     DELETE_USER,
     DELETE_USERS_ERROR,
     REDACT_USER,
+    SEARCH_USER,
     SHOW_MALE,
     USERS_ERROR
 } from '../actions/types';
@@ -11,6 +12,7 @@ const initiallState = {
     users: [],
     showMale: false,
     error: '',
+    searchUser: ''
 }
 
 export const UsersReducer = (state = initiallState, action) => {
@@ -50,6 +52,12 @@ export const UsersReducer = (state = initiallState, action) => {
             return {
                 ...state,
                 showMale: !state.showMale
+            }
+
+        case SEARCH_USER:
+            return {
+                ...state,
+                searchUser: action.payload
             }
 
         default:

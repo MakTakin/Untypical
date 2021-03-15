@@ -5,7 +5,8 @@ import { Header } from '../../ui/headers';
 import User from './user/user';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { showMale } from '../../../redux/actions/actions';
+import { searchUser, showMale } from '../../../redux/actions/actions';
+import { Search } from '../../ui/inputs';
 
 const Users = styled.ul`
     height: 75vh;
@@ -25,13 +26,35 @@ const Users = styled.ul`
     scrollbar-color: #BDBDBD #F2F2F2;
 `
 
+const UsersBar = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 10px;
+`
+
 const ListUsers = () => {
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.users)
+    const search = useSelector(state => state.users.searchUser)
     const showOnlyMale = useSelector(state => state.users.showMale)
     const visibleUsers = showOnlyMale ? users.filter( user => user.sex === 'male') : users
+    const filter = (users, search) => {
+        if (search.length === 0) {
+            return users
+        }
+        const searchTerm = search.toLowerCase()
+        const visible = users.filter( user =>
+            user.name.toLowerCase().indexOf(searchTerm) > -1 ||
+            user.middlename.toLowerCase().indexOf(searchTerm) > -1 ||
+            user.lastname.toLowerCase().indexOf(searchTerm) > -1 ||
+            user.email.toLowerCase().indexOf(searchTerm) > -1
+        )
+        return visible
+    }
+    const filterUsers = filter(visibleUsers, search)
 
-    const listUsers = visibleUsers.map(user => {
+    const listUsers = filterUsers.map(user => {
         return(
             <User
                 key={user.id}
@@ -44,10 +67,10 @@ const ListUsers = () => {
             {users.length > 0 ?
                 <>
                     <Header> List of Users</Header>
+                    <UsersBar>
                     <FormControlLabel
                         control={
                         <Checkbox
-                        // checked={state.checkedB}
                         onChange={() => dispatch(showMale())}
                         name="male"
                         color="primary"
@@ -55,11 +78,17 @@ const ListUsers = () => {
                         }
                         label="Show Only Male"
                     />
+                    <Search
+                        placeholder='Search user...'
+                        value={search}
+                        onChange={e =>  dispatch(searchUser(e.target.value))}
+                    />
+                    </UsersBar>
                     <Users>
                         {listUsers}
                     </Users>
                 </> :
-                <Header> Users aren't yet </Header>
+                <Header> There are no users yet </Header>
             }
         </>
     )

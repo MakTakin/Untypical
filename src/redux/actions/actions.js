@@ -6,7 +6,8 @@ import {
     HIDE_MODAL,
     USERS_ERROR,
     DELETE_USERS_ERROR,
-    SHOW_MALE
+    SHOW_MALE,
+    SEARCH_USER
 } from './types';
 
 export const addUser = ( user ) => {
@@ -61,5 +62,12 @@ export const hideModal = ( ) => {
 export const showMale = ( ) => {
     return {
         type: SHOW_MALE
+    }
+}
+
+export const searchUser = ( term ) => {
+    return {
+        type: SEARCH_USER,
+        payload: term
     }
 }
