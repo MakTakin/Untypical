@@ -1,19 +1,20 @@
-import { ADD_USER, CHANGE_ACTIVATE_USER, DELETE_USER, FETCH_USERS_FAILED, REDACT_USER } from '../actions/types';
+import {
+    ADD_USER,
+    DELETE_USER,
+    DELETE_USERS_ERROR,
+    REDACT_USER,
+    SHOW_MALE,
+    USERS_ERROR
+} from '../actions/types';
 
 const initiallState = {
     users: [],
+    showMale: false,
     error: '',
-    activateUser: false
 }
 
 export const UsersReducer = (state = initiallState, action) => {
     switch (action.type) {
-
-        case CHANGE_ACTIVATE_USER:
-            return {
-                ...state,
-                activateUser: action.payload,
-            }
 
         case ADD_USER:
             return {
@@ -33,10 +34,22 @@ export const UsersReducer = (state = initiallState, action) => {
                 users: state.users.map(user => user.id === action.id ? action.payload : user)
             }
 
-        case FETCH_USERS_FAILED:
+        case USERS_ERROR:
             return {
                 ...state,
                 error: action.payload,
+            }
+
+        case DELETE_USERS_ERROR:
+            return {
+                ...state,
+                error: '',
+            }
+
+        case SHOW_MALE:
+            return {
+                ...state,
+                showMale: !state.showMale
             }
 
         default:

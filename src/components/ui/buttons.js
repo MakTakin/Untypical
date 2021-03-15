@@ -2,24 +2,30 @@ import styled from 'styled-components'
 import Button from '@material-ui/core/Button';
 
 export const CloseButton = styled(Button)`
-    border: none;
-    outline: none;
-    margin: 0 10px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    background: #032c9e;
-    color: #fff;
-    cursor: pointer;
-
+    && {
+        font-family: 'Rubik';
+        display: flex;
+        margin-left: auto;
+    }
 `
 
 export const FormButton = styled(Button)`
-    display: ${props => props.activateUser ? 'none' : 'inline-block'};
-    padding: 10px 50px;
+    && {
+        font-family: 'Rubik';
+    }
 `
 
-export const EditUserButton = styled(Button)`
-    // display: ${props => props.activateUser ? 'inline-block' : 'none'};
-    padding: 10px 50px;
+export const AddUserButton = styled(Button)`
+    && {
+        font-family: 'Rubik';
+        margin-top: auto; 
+        align-self: flex-end;
+    }
+`
+
+export const UserButton = styled(Button)`
+    && {
+        font-family: 'Rubik';
+        font-size: 12px;
+    }
 `

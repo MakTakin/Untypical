@@ -3,6 +3,8 @@ import Form from './form/form';
 import { useDispatch } from 'react-redux';
 import { v4 as uuid } from 'uuid';
 import { newUser } from '../../redux/actions/newUser';
+import { onValidation } from '../../helpers/validation';
+import { usersError } from '../../redux/actions/actions';
 
 const AddUserForm = () => {
     const dispatch = useDispatch()
@@ -17,7 +19,12 @@ const AddUserForm = () => {
 
     const createUserFunc = (e) => {
         e.preventDefault()
-        dispatch(newUser(user))
+        const validation = onValidation(user)
+        if (validation) {
+            dispatch(newUser(user))
+        } else {
+            dispatch(usersError())
+        }
     }
 
     return (

@@ -1,12 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { EditUserButton, FormButton } from '../../ui/buttons';
-// import { changeActivateUser } from '../../../redux/actions/actions';
-import Button from '@material-ui/core/Button';
-import { changeActivateUser } from '../../../redux/actions/actions';
-import { EditUserButton, FormButton } from '../../ui/buttons';
+import { FormButton } from '../../ui/buttons';
+import { useSelector } from 'react-redux';
 const FormContainer = styled.form`
-    margin-top: 5%;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
 `
@@ -19,17 +16,28 @@ const FormColumn = styled.div`
 
 const FormInput = styled.input`
     border: none;
-    border: 1px solid #333333;
+    border: ${props => props.error ? '1px solid red' :'1px solid #333333'};
     border-radius: 5px;
     padding: 10px;
     outline: none;
     margin-bottom: 20px;
+    color: ${props => props.error ? 'red' : 'black'};
+    &:focus {
+        border: ${props => props.error ? '1px solid red' :'1px solid #065bf9'};
+    }
+`
+
+const FormSelect = styled.select`
+    border: none;
+    border: 1px solid #333333;
+    border-radius: 5px;
+    padding: 10px;
+    outline: none;
+    margin-bottom: 20px;    
+    cursor: pointer;
     
     &:focus {
         border: 1px solid #065bf9;
-    }
-    &:disabled {
-        cursor: not-allowed;
     }
 `
 
@@ -43,11 +51,18 @@ const FormButtonContainer = styled.div`
     text-align: center;
 `
 
-const Form = ({ user, setUser, onSubmit, activateUser, dispatch }) => {
+const Error = styled.div`
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    
+`
 
+const Form = ({ user, setUser, onSubmit }) => {
+
+    const error = useSelector(state => state.users.error)
     const changeUser = (e) => {
         const editUser = { ...user }
-
         editUser[e.target.name] = e.target.value
         setUser(editUser)
     }
@@ -56,6 +71,7 @@ const Form = ({ user, setUser, onSubmit, activateUser, dispatch }) => {
             <FormContainer
                 onSubmit={(e) => onSubmit(e)}
             >
+                <Error>{error}</Error>
                 <FormFlex>
                     <FormColumn>
                         <FormInput
@@ -63,21 +79,19 @@ const Form = ({ user, setUser, onSubmit, activateUser, dispatch }) => {
                             name='name'
                             value={user.name}
                             onChange={(e) => changeUser(e)}
-                            disabled={activateUser}
+                            error={error}
                         />
                         <FormInput
                             placeholder='middlename'
                             name='middlename'
                             value={user.middlename}
                             onChange={(e) => changeUser(e)}
-                            disabled={activateUser}
                         />
                         <FormInput
                             placeholder='lastname'
                             name='lastname'
                             value={user.lastname}
                             onChange={(e) => changeUser(e)}
-                            disabled={activateUser}
                         />
                     </FormColumn>
                     <FormColumn>
@@ -86,45 +100,26 @@ const Form = ({ user, setUser, onSubmit, activateUser, dispatch }) => {
                             name='email'
                             value={user.email}
                             onChange={(e) => changeUser(e)}
-                            disabled={activateUser}
+                            error={error}
                         />
-                        <select
-                            placeholder='sex'
+                        <FormSelect
                             name='sex'
                             value={user.sex}
                             onChange={(e) => changeUser(e)}
-                            disabled={activateUser}
                         >
-                            <option value="male">М</option>
-                            <option value="female">Ж</option>
-                        </select>
+                            <option value="male">Мale</option>
+                            <option value="female">Female</option>
+                        </FormSelect>
                     </FormColumn>
                 </FormFlex>
                 <FormButtonContainer>
-                    {/*<Button*/}
-                    {/*    variant='contained'*/}
-                    {/*    color="primary"*/}
-                    {/*    type='submit'*/}
-                    {/*    activateUser={activateUser}*/}
-                    {/*>*/}
-                    {/*    Save*/}
-                    {/*</Button>*/}
-                    {/*<Button*/}
-                    {/*    type='button'*/}
-                    {/*    activateUser={activateUser}*/}
-                    {/*    onClick={() => dispatch(changeActivateUser(true))}*/}
-                    {/*>*/}
-                    {/*    Edit User*/}
-                    {/*</Button>*/}
                     <FormButton
                         variant='contained'
                         color="primary"
                         type='submit'
-                        activateUser={activateUser}
                     >
                         Save
                     </FormButton>
-
                 </FormButtonContainer>
             </FormContainer>
     )

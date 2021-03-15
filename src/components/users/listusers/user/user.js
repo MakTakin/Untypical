@@ -1,11 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import { deleteUser, showModal } from '../../../../redux/actions/actions';
-import Button from '@material-ui/core/Button';
+import { deleteUser } from '../../../../redux/actions/actions';
 import { useDispatch } from 'react-redux';
 import { UserLink } from '../../../ui/links';
-import Link from '@material-ui/core/Link';
-import {Link as RouterLink} from "react-router-dom"
+import { UserButton } from '../../../ui/buttons';
 
 const UserButtons = styled.div`
     display: none;
@@ -21,8 +19,8 @@ const UserContainer = styled.li`
     padding: 10px;
     border-radius: 5px;
     cursor: pointer;
-    div, button {
-        margin-bottom: 5px;
+    button {
+        margin-bottom: 10px;
     }
     
     &:hover {
@@ -31,30 +29,45 @@ const UserContainer = styled.li`
         }
     }
 `
+
+const UserInfo = styled.div`
+   div {
+        margin-bottom: 10px;
+   } 
+`
+
+const UserEmail = styled.div``
+
+const UserName = styled.div``
+
+const UserSex = styled.div``
+
 const User = ({ user }) => {
     const dispatch = useDispatch()
 
     return (
         <UserContainer>
-            <div>
-            <div>name: <b>{user.name}</b></div>
-            <div>email: <b>{user.email}</b></div>
-            </div>
+            <UserInfo>
+            <UserName>Name: <b>{user.name}</b></UserName>
+            <UserSex>Sex: <b>{user.sex}</b></UserSex>
+            <UserEmail>Email: <b>{user.email}</b></UserEmail>
+            </UserInfo>
             <UserButtons>
-                <Button
+                <UserButton
                     variant='outlined'
                     color='primary'
-
                     onClick={() => dispatch(deleteUser(user.id))}
                 >
                     Delete User
-                </Button>
-                <Link
-                    component={RouterLink}
+                </UserButton>
+                <UserButton
+                    variant='outlined'
+                    color='primary'
+                    component={UserLink}
                     to={`/${user.id}`}
                 >
-                    More Information
-                </Link>
+                    Information
+                </UserButton>
             </UserButtons>
         </UserContainer>
     )

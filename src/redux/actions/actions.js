@@ -1,15 +1,12 @@
 import {
-    FETCH_USERS_SUCCESS,
-    FETCH_USERS_FAILED,
-    APP_LOADING,
-    APP_LOAD,
-    FETCH_POSTS_FAILED,
-    FETCH_POSTS_SUCCESS,
     ADD_USER,
     REDACT_USER,
-    CHANGE_ACTIVATE_USER,
+    DELETE_USER,
     SHOW_MODAL,
-    HIDE_MODAL, DELETE_USER
+    HIDE_MODAL,
+    USERS_ERROR,
+    DELETE_USERS_ERROR,
+    SHOW_MALE
 } from './types';
 
 export const addUser = ( user ) => {
@@ -34,19 +31,18 @@ export const redactUser = ( user ) => {
     }
 }
 
-export const changeActivateUser = ( status ) => {
+export const usersError = ( ) => {
     return {
-        type: CHANGE_ACTIVATE_USER,
-        payload: status
+        type: USERS_ERROR,
+        payload: 'Введите корректные данные в обязательные поля'
     }
 }
 
-// export const fetchUsersFailed = ( error ) => {
-//     return {
-//         type: FETCH_USERS_FAILED,
-//         payload: error
-//     }
-// }
+export const deleteUsersError = ( ) => {
+    return {
+        type: DELETE_USERS_ERROR,
+    }
+}
 
 export const showModal = ( type, props ) => {
     return {
@@ -59,5 +55,11 @@ export const showModal = ( type, props ) => {
 export const hideModal = ( ) => {
     return {
         type: HIDE_MODAL
+    }
+}
+
+export const showMale = ( ) => {
+    return {
+        type: SHOW_MALE
     }
 }

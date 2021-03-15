@@ -1,8 +1,7 @@
 import React from 'react'
-import styled from 'styled-components'
 import { Redirect, Route, Switch } from 'react-router-dom';
 import Users from '../users/users';
-import MoreInformation from '../moreInformation/moreInfomation';
+import Information from '../information/infomation';
 
 const Main = () => {
     return (
@@ -13,9 +12,8 @@ const Main = () => {
                        exact
                 />
                 <Route path='/:id'
-                       render={(props) => <MoreInformation {...props}/>
+                       render={(props) => <Information {...props}/>
                        }
-
                 />
                 <Redirect to='/'/>
             </Switch>
